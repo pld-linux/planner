@@ -15,6 +15,13 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/0.11/%{name}-%{version}.t
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.0.5
+BuildRequires:	libgsf-devel >= 1.4.0
+BuildRequires:	libxslt-devel >= 1.0
+BuildRequires:  bzip2-devel
+%if %{with pgsql}
+BuildRequires:	postgresql
+BuildRequires:	postgresql-devel
+%endif
 Obsoletes:	libmrproject
 Obsoletes:	mrproject
 Obsoletes:	python-libmrproject
@@ -99,7 +106,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/%{name}/file-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
+%if %{with pgsql}
 %exclude %{_libdir}/%{name}/storage-modules/*sql.so
+%endif
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/views/*.so
 
