@@ -7,11 +7,12 @@ Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu po
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.11
-Release:	0.2
+Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/0.11/%{name}-%{version}.tar.gz
 # Source0-md5:	ce3ee7d4d84695b0edb88a25b55fcf7f
+Patch0:		%{name}-po-fix.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.0.5
@@ -67,6 +68,7 @@ Modu³ przechowywania danych w bazie PostgreSQL dla Plannera.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \
