@@ -9,3 +9,14 @@
  
  AM_GLIB_GNU_GETTEXT
  
+--- planner-0.12/configure~	2004-07-23 10:05:22.000000000 +0000
++++ planner-0.12/configure	2004-07-23 10:05:22.000000000 +0000
+@@ -21336,7 +21336,7 @@
+ _ACEOF
+ 
+ 
+-ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nl nn no pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
++ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
+ 
+ 
+ 
