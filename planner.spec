@@ -1,19 +1,26 @@
-
-%bcond_without pgsql
-
+#
+# Conditional build:
+%bcond_without pgsql	# without PostgreSQL storage module
+#
 Summary:	A project management program that can help build plans, and track the progress
-Summary(pl):	System zarz±dzania projektem
+Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.11
 Release:	0.1
 License:	GPL
 Group:		X11/Applications
-URL:		http://www.imendio.com/projects/planner/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/0.11/%{name}-%{version}.tar.gz
 # Source0-md5:	ce3ee7d4d84695b0edb88a25b55fcf7f
-BuildRequires:	libgnomeui-devel >= 2.0.5
+URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
+BuildRequires:	libgnomeui-devel >= 2.0.5
+Obsoletes:	libmrproject
+Obsoletes:	libmrproject-devel
+Obsoletes:	libmrproject-static
+Obsoletes:	libmrproject-storage-pgsql
+Obsoletes:	mrproject
+Obsoletes:	python-libmrproject
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,17 +36,22 @@ Planner é um gerenciador de projetos baseado no GNOME.
 
 %package storage-pgsql
 Summary:	PostgreSQL storage module for Planner
+Summary(pl):	Modu³ przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}
 
 %description storage-pgsql
 PostgreSQL storage module for Planner application.
 
+%description storage-pgsql -l pl
+Modu³ przechowywania danych w bazie PostgreSQL dla Plannera.
+
 %prep
 %setup -q
 
 %build
-%configure --enable-timetable
+%configure \
+	--enable-timetable
 %{__make}
 
 %install
@@ -60,9 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 
 %dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/file-modules/
-%dir %{_libdir}/%{name}/plugins/
-%dir %{_libdir}/%{name}/storage-modules/
+%dir %{_libdir}/%{name}/file-modules
+%dir %{_libdir}/%{name}/plugins
+%dir %{_libdir}/%{name}/storage-modules
 %dir %{_libdir}/%{name}/views
 
 %attr(755,root,root) %{_libdir}/%{name}/file-modules/*.so
