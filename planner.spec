@@ -12,12 +12,13 @@ Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu po
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.12
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	6d6cb645f87833ba0370847ed62d9400
 Patch0:		%{name}-po-fix.patch
+Patch1:		%{name}-locale_names.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	bzip2-devel
 %{?with_sharp:BuildRequires:	gtk-sharp-devel}
@@ -83,6 +84,9 @@ Modu³ przechowywania danych w bazie PostgreSQL dla Plannera.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
+mv -f po/{no,nb}.po
 
 %build
 %configure \
