@@ -42,7 +42,7 @@ Planner é um gerenciador de projetos baseado no GNOME.
 Summary:	Header files for planner library
 Summary(pl):	Pliki nag³ówkowe biblioteki planner
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{version}
 Obsoletes:	libmrproject-devel
 Obsoletes:	libmrproject-static
 
@@ -56,7 +56,7 @@ Pliki nag³ówkowe biblioteki planner.
 Summary:	PostgreSQL storage module for Planner
 Summary(pl):	Modu³ przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{version}
 Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject-storage-pgsql
 
