@@ -18,7 +18,7 @@ BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.0.5
 BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.0
-BuildRequires:  bzip2-devel
+BuildRequires:	bzip2-devel
 %if %{with pgsql}
 BuildRequires:	postgresql-devel
 %endif
