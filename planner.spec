@@ -1,7 +1,6 @@
 #
 # TODO:
-# - check things in %{_share}/mime
-# - separate python and dotnet subpackage
+# - separate dotnet subpackage
 #
 # Conditional build:
 %bcond_without	pgsql	# without PostgreSQL storage module
@@ -20,22 +19,29 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{version}/%{name}-%{vers
 Patch0:		%{name}-po-fix.patch
 Patch1:		%{name}-locale_names.patch
 URL:		http://www.imendio.com/projects/planner/
+BuildRequires:	GConf2-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	bzip2-devel
+BuildRequires:	gnome-vfs2-devel >= 2.0.2
+BuildRequires:	gtk-doc >= 1.0
 %{?with_sharp:BuildRequires:	gtk-sharp-devel}
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.28
 BuildRequires:	libgda-devel >= 1.0
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
-BuildRequires:	libgnomeui-devel >= 2.0.5
+BuildRequires:	libgnomeui-devel >= 2.1.1
 BuildRequires:	libgsf-devel >= 1.4.0
-BuildRequires:	libxslt-devel >= 1.0
+BuildRequires:	libxslt-devel >= 1.0.27
 #BuildRequires:	libXi-devel
+BuildRequires:	pkgconfig
 %if %{with pgsql}
 BuildRequires:	postgresql-devel
 %endif
-BuildRequires:	python-devel
-BuildRequires:	python-pygtk-devel
+BuildRequires:	python-devel >= 2.2
+BuildRequires:	python-pygtk-devel >= 1.99.14
 BuildRequires:	scrollkeeper
+Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	scrollkeeper
+Requires(post,postun):	shared-mime-info
 Obsoletes:	libmrproject
 Obsoletes:	mrproject
 Obsoletes:	python-libmrproject
@@ -58,7 +64,10 @@ Planner é um gerenciador de projetos baseado no GNOME.
 Summary:	Header files for planner library
 Summary(pl):	Pliki nag³ówkowe biblioteki planner
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 2.0.4
+Requires:	libgsf-devel >= 1.4.0
+Requires:	libxml2-devel >= 2.5.4
 Obsoletes:	libmrproject-devel
 Obsoletes:	libmrproject-static
 
@@ -72,7 +81,7 @@ Pliki nag³ówkowe biblioteki planner.
 Summary:	PostgreSQL storage module for Planner
 Summary(pl):	Modu³ przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject-storage-pgsql
 
@@ -81,6 +90,19 @@ PostgreSQL storage module for Planner application.
 
 %description storage-pgsql -l pl
 Modu³ przechowywania danych w bazie PostgreSQL dla Plannera.
+
+%package -n python-planner
+Summary:	Python binding for Planner library
+Summary(pl):	Wi±zanie Pythona do biblioteki Planner
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+Requires:	python-pygtk-devel >= 1.99.14
+
+%description -n python-planner
+Python binding for Planner library.
+
+%description -n python-planner -l pl
+Wi±zanie Pythona do biblioteki Planner.
 
 %prep
 %setup -q
@@ -115,20 +137,25 @@ install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.la
 
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/gtk-2.0/*.la
-
-# move provided docs to proper dir
-#mv $RPM_BUILD_ROOT%{_docdir}/%{name}/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-#rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
-
-#mv $RPM_BUILD_ROOT%{_datadir}/gtk-doc/* $RPM_BUILD_ROOT%{_gtkdocdir}
+rm -f $RPM_BUILD_ROOT%{_datadir}/mime/{XMLnamespaces,globs,magic}
+rm -f $RPM_BUILD_ROOT%{_datadir}/mime/application/*.xml
 
 %find_lang %{name} --with-gnome --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+umask 022
+/sbin/ldconfig
+update-mime-database %{_datadir}/mime
+scrollkeeper-update
+
+%postun
+umask 022
+/sbin/ldconfig
+update-mime-database %{_datadir}/mime
+scrollkeeper-update
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -150,15 +177,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/views/*.so
 
-%attr(755,root,root) %{py_sitedir}/gtk-2.0/planner.so
-
 %{_datadir}/application-registry/*
 %{_desktopdir}/*
 %{_datadir}/mime-info/*
-# check these:
-%{_datadir}/mime/application/*.xml
 %{_datadir}/mime/packages/*.xml
-#
 %{_datadir}/%{name}
 %dir %{_pixmapsdir}/%{name}
 %{_pixmapsdir}/*.png
@@ -179,3 +201,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*sql.so
 %endif
+
+%files -n python-planner
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/gtk-2.0/planner.so
