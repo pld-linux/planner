@@ -19,7 +19,6 @@ BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.0
 BuildRequires:  bzip2-devel
 %if %{with pgsql}
-BuildRequires:	postgresql
 BuildRequires:	postgresql-devel
 %endif
 Obsoletes:	libmrproject
