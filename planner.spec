@@ -4,8 +4,8 @@
 # - separate python and dotnet subpackage
 #
 # Conditional build:
-%bcond_without pgsql	# without PostgreSQL storage module
-%bcond_without sharp	# without dotnet bindings
+%bcond_without	pgsql	# without PostgreSQL storage module
+%bcond_with	sharp	# without dotnet bindings
 #
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
