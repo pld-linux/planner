@@ -11,7 +11,7 @@ Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu po
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.12.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.12/%{name}-%{version}.tar.bz2
