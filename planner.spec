@@ -150,12 +150,14 @@ umask 022
 /sbin/ldconfig
 update-mime-database %{_datadir}/mime
 scrollkeeper-update
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
 %postun
 umask 022
 /sbin/ldconfig
 update-mime-database %{_datadir}/mime
 scrollkeeper-update
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
