@@ -1,0 +1,11 @@
+--- planner-0.12/configure.in~	Fri Jul 23 10:44:41 2004
++++ planner-0.12/configure.in	Fri Jul 23 10:44:41 2004
+@@ -183,7 +183,7 @@
+ AC_SUBST(GETTEXT_PACKAGE)
+ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The prefix for our gettext translation domains.])
+ 
+-ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nl nn no pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
++ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
+ 
+ AM_GLIB_GNU_GETTEXT
+ 
