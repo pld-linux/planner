@@ -16,9 +16,6 @@ URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.0.5
 Obsoletes:	libmrproject
-Obsoletes:	libmrproject-devel
-Obsoletes:	libmrproject-static
-Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject
 Obsoletes:	python-libmrproject
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,11 +31,27 @@ Program wspomagaj±cy zarz±dzanie projektami, tworzenie planów i
 %description -l pt_BR
 Planner é um gerenciador de projetos baseado no GNOME.
 
+%package devel
+Summary:	Header files for planner library
+Summary(pl):	Pliki nag³ówkowe biblioteki planner
+Group:		Development/Libraries
+Requires:	%{name} = %{epoch}:%{version}
+Obsoletes:	libmrproject-devel
+Obsoletes:	libmrproject-static
+
+%description devel
+Header files for planner library.
+
+%description devel -l pl
+Pliki nag³ówkowe biblioteki planner.
+
 %package storage-pgsql
 Summary:	PostgreSQL storage module for Planner
 Summary(pl):	Modu³ przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}
+Obsoletes:	libmrproject-storage-pgsql
+Obsoletes:	mrproject-storage-pgsql
 
 %description storage-pgsql
 PostgreSQL storage module for Planner application.
@@ -61,10 +74,16 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	omf_dest_dir=%{_omf_dest_dir}
 
+# useless - modules loaded through gmodule
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.la
+
 %find_lang %{name} --with-gnome --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -84,12 +103,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/views/*.so
 
-%{_libdir}/%{name}/file-modules/*.la
-%{_libdir}/%{name}/plugins/*.la
-%{_libdir}/%{name}/storage-modules/*.la
-%exclude %{_libdir}/%{name}/storage-modules/*sql.la
-%{_libdir}/%{name}/views/*.la
-
 %{_datadir}/application-registry/*
 %{_desktopdir}/*
 %{_datadir}/mime-info/*
@@ -99,9 +112,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/*/*.png
 %{_omf_dest_dir}/*
 
+%files devel
+%defattr(644,root,root,755)
+%{_libdir}/libplanner*.la
+%{_includedir}/planner-1.0
+%{_pkgconfigdir}/*.pc
+
 %if %{with pgsql}
 %files storage-pgsql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*sql.so
-%{_libdir}/%{name}/storage-modules/*sql.la
 %endif
