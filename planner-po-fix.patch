@@ -1,0 +1,25 @@
+diff -Nuard planner-0.11.orig/po/planner.pot planner-0.11/po/planner.pot
+--- planner-0.11.orig/po/planner.pot	2003-12-01 23:08:49.000000000 +0100
++++ planner-0.11/po/planner.pot	2003-12-07 14:39:47.666189432 +0100
+@@ -15,7 +15,7 @@
+ "Content-Type: text/plain; charset=CHARSET\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: data/planner.desktop.in.h:1
++#: data/planner.desktop.in.h:3
+ msgid "Planner Project Management"
+ msgstr ""
+ 
+diff -Nuard planner-0.11.orig/po/pl.po planner-0.11/po/pl.po
+--- planner-0.11.orig/po/pl.po	2003-12-01 23:08:59.000000000 +0100
++++ planner-0.11/po/pl.po	2003-12-07 14:39:57.860639640 +0100
+@@ -17,8 +17,7 @@
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: data/planner.desktop.in.h:1
+-#, fuzzy
++#: data/planner.desktop.in.h:3
+ msgid "Planner Project Management"
+ msgstr "Zarządzanie projektami"
+ 
