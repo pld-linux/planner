@@ -96,6 +96,7 @@ Summary:	Python binding for Planner library
 Summary(pl):	Wi±zanie Pythona do biblioteki Planner
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
+%pyrequires_eq	python-libs
 Requires:	python-pygtk-devel >= 1.99.14
 
 %description -n python-planner
