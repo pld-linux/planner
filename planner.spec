@@ -20,6 +20,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{version}/%{name}-%{vers
 Patch0:		%{name}-po-fix.patch
 Patch1:		%{name}-locale_names.patch
 URL:		http://www.imendio.com/projects/planner/
+BuildRequires:	XFree86-devel
 BuildRequires:	bzip2-devel
 %{?with_sharp:BuildRequires:	gtk-sharp-devel}
 BuildRequires:	intltool
@@ -28,7 +29,7 @@ BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.0.5
 BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.0
-BuildRequires:	libXi-devel
+#BuildRequires:	libXi-devel
 %if %{with pgsql}
 BuildRequires:	postgresql-devel
 %endif
