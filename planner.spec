@@ -10,12 +10,12 @@ Summary:	A project management program that can help build plans, and track the p
 Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.12
-Release:	2
+Version:	0.12.1
+Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	6d6cb645f87833ba0370847ed62d9400
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.12/%{name}-%{version}.tar.bz2
+# Source0-md5:	423c3216cb9049bc526e00ebf81d069b
 Patch0:		%{name}-po-fix.patch
 Patch1:		%{name}-locale_names.patch
 URL:		http://www.imendio.com/projects/planner/
@@ -109,7 +109,7 @@ Wi±zanie Pythona do biblioteki Planner.
 %patch0 -p1
 %patch1 -p1
 
-mv -f po/{no,nb}.po
+rm -f po/no.po
 
 %build
 %configure \
