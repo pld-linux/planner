@@ -149,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %post
 umask 022
 /sbin/ldconfig
-update-mime-database %{_datadir}/mime
+update-mime-database %{_datadir}/mime ||:
 scrollkeeper-update
 [ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 
