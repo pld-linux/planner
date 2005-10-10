@@ -1,37 +1,30 @@
 #
-# TODO:
-# - separate dotnet subpackage
-#
 # Conditional build:
 %bcond_without	pgsql	# without PostgreSQL storage module
-%bcond_with	sharp	# without dotnet bindings
 #
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.12.1
-Release:	5
+Version:	0.13
+Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	423c3216cb9049bc526e00ebf81d069b
-Patch0:		%{name}-po-fix.patch
-Patch1:		%{name}-locale_names.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.13/%{name}-%{version}.tar.bz2
+# Source0-md5:	acc2e2075bc489e849843009d6583cc0
+Patch0:		%{name}-locale_names.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0.2
 BuildRequires:	gtk-doc >= 1.0
-%{?with_sharp:BuildRequires:	gtk-sharp-devel}
 BuildRequires:	intltool >= 0.28
 BuildRequires:	libgda-devel >= 1.0
 BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
 BuildRequires:	libgnomeui-devel >= 2.1.1
 BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.0.27
-#BuildRequires:	libXi-devel
 BuildRequires:	pkgconfig
 %if %{with pgsql}
 BuildRequires:	postgresql-devel
@@ -39,6 +32,7 @@ BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.14
 BuildRequires:	scrollkeeper
+Requires:	hicolor-icon-theme
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
 Requires(post,postun):	shared-mime-info
@@ -108,14 +102,13 @@ Wi±zanie Pythona do biblioteki Planner.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 rm -f po/no.po
 
 %build
 %configure \
+	--disable-update-mimedb \
 	--enable-database \
-	%{?with_sharp:--enable-dotnet} \
 	--enable-gtk-doc \
 	--enable-python \
 	--enable-python-plugin \
@@ -165,6 +158,7 @@ scrollkeeper-update
 %doc ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libplanner*.so.*.*
+%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.so
 
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/file-modules
@@ -185,16 +179,19 @@ scrollkeeper-update
 %{_datadir}/mime-info/*
 %{_datadir}/mime/packages/*.xml
 %{_datadir}/%{name}
+%{_iconsdir}/hicolor/*/*/*.png
 %dir %{_pixmapsdir}/%{name}
 %{_pixmapsdir}/*.png
 %{_pixmapsdir}/*/*.png
 %{_omf_dest_dir}/*
 %{_examplesdir}/%{name}-%{version}
+%{_sysconfdir}/gconf/schemas/%{name}.schemas
 
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libplanner*.la
 %attr(755,root,root) %{_libdir}/libplanner*.so
+%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.la
 %{_includedir}/planner-1.0
 %{_pkgconfigdir}/*.pc
 %{_gtkdocdir}/libplanner
