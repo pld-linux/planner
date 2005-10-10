@@ -128,7 +128,7 @@ install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 	omf_dest_dir=%{_omf_dest_dir}
 
 # useless - modules loaded through gmodule
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/{,*/}*.la
 
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/gtk-2.0/*.la
 rm -f $RPM_BUILD_ROOT%{_datadir}/mime/{XMLnamespaces,globs,magic}
@@ -158,7 +158,6 @@ scrollkeeper-update
 %doc ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libplanner*.so.*.*
-%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.so
 
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/file-modules
@@ -166,6 +165,7 @@ scrollkeeper-update
 %dir %{_libdir}/%{name}/storage-modules
 %dir %{_libdir}/%{name}/views
 
+%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.so
 %attr(755,root,root) %{_libdir}/%{name}/file-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
 %if %{with pgsql}
@@ -191,7 +191,6 @@ scrollkeeper-update
 %defattr(644,root,root,755)
 %{_libdir}/libplanner*.la
 %attr(755,root,root) %{_libdir}/libplanner*.so
-%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.la
 %{_includedir}/planner-1.0
 %{_pkgconfigdir}/*.pc
 %{_gtkdocdir}/libplanner
