@@ -1,21 +1,21 @@
---- planner-0.12/configure.in~	Fri Jul 23 10:44:41 2004
-+++ planner-0.12/configure.in	Fri Jul 23 10:44:41 2004
-@@ -183,7 +183,7 @@
+--- planner-0.13/configure.in.orig	2005-03-13 12:17:04.000000000 +0100
++++ planner-0.13/configure.in	2005-10-10 19:57:31.000000000 +0200
+@@ -153,7 +153,7 @@
  AC_SUBST(GETTEXT_PACKAGE)
  AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The prefix for our gettext translation domains.])
  
--ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn no pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
+-ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn no pa pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN zh_TW"
 +ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
  
  AM_GLIB_GNU_GETTEXT
  
---- planner-0.12/configure~	2004-07-23 10:05:22.000000000 +0000
-+++ planner-0.12/configure	2004-07-23 10:05:22.000000000 +0000
-@@ -21336,7 +21336,7 @@
+--- planner-0.13/configure.orig	2005-10-10 20:00:50.000000000 +0200
++++ planner-0.13/configure	2005-10-10 20:02:05.000000000 +0200
+@@ -21866,7 +21866,7 @@
  _ACEOF
  
  
--ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn no pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
+-ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn no pa pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN zh_TW"
 +ALL_LINGUAS="am az be bg ca cs da de el en_CA en_GB es et fa fr hi hr hu id is it ja kn ko lv ml mn ms nb nl nn pl pt pt_BR ru sk sq sr sr@Latn sv uk zh_CN"
  
  
