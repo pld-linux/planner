@@ -32,6 +32,7 @@ BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.14
 BuildRequires:	scrollkeeper
+Requires:	gda-postgres
 Requires:	hicolor-icon-theme
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
