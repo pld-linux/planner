@@ -32,7 +32,6 @@ BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.14
 BuildRequires:	scrollkeeper
-Requires:	gda-postgres
 Requires:	hicolor-icon-theme
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
@@ -77,6 +76,7 @@ Summary:	PostgreSQL storage module for Planner
 Summary(pl):	Modu³ przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	gda-postgres
 Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject-storage-pgsql
 
