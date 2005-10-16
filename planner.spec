@@ -1,3 +1,5 @@
+# TODO
+# - add bcond evolution ? - It's experimental code
 #
 # Conditional build:
 %bcond_without	pgsql	# without PostgreSQL storage module
@@ -19,20 +21,22 @@ BuildRequires:	XFree86-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0.2
 BuildRequires:	gtk-doc >= 1.0
-BuildRequires:	intltool >= 0.28
+BuildRequires:	intltool >= 0.30
 BuildRequires:	libgda-devel >= 1.0
-BuildRequires:	libgnomeprintui-devel >= 2.2.1.1
-BuildRequires:	libgnomeui-devel >= 2.1.1
+BuildRequires:	libgnomeprintui-devel >= 2.6.0
 BuildRequires:	libgsf-devel >= 1.4.0
-BuildRequires:	libxslt-devel >= 1.0.27
+BuildRequires:	libxslt-devel >= 1.1.0
 BuildRequires:	pkgconfig
 %if %{with pgsql}
 BuildRequires:	postgresql-devel
 %endif
 BuildRequires:	python-devel >= 2.2
-BuildRequires:	python-pygtk-devel >= 1.99.14
+BuildRequires:	python-pygtk-devel >= 1:2.0.0
+BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
 Requires:	hicolor-icon-theme
+Requires(post,preun):	GConf2
+Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
 Requires(post,postun):	shared-mime-info
@@ -144,15 +148,22 @@ rm -rf $RPM_BUILD_ROOT
 umask 022
 /sbin/ldconfig
 update-mime-database %{_datadir}/mime ||:
-scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+%scrollkeeper_update_post
+%update_desktop_database_post
+
+%preun
+%gconf_schema_uninstall %{name}.schemas
 
 %postun
 umask 022
 /sbin/ldconfig
 update-mime-database %{_datadir}/mime
-scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+%scrollkeeper_update_postun
+%update_desktop_database_postun
+if [ $1 = 0 ]; then
+	umask 022
+	update-mime-database %{_datadir}/mime
+fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
