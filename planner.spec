@@ -2,14 +2,14 @@
 # - add bcond evolution ? - It's experimental code
 #
 # Conditional build:
-%bcond_without	pgsql	# without PostgreSQL storage module
+%bcond_with	pgsql	# without PostgreSQL storage module
 #
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.13
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.13/%{name}-%{version}.tar.bz2
@@ -22,12 +22,13 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0.2
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.30
-BuildRequires:	libgda-devel >= 1.0
 BuildRequires:	libgnomeprintui-devel >= 2.6.0
 BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.1.0
 BuildRequires:	pkgconfig
 %if %{with pgsql}
+BuildRequires:	libgda-devel >= 1.0
+BuildRequires:	libgda-devel < 1.9
 BuildRequires:	postgresql-devel
 %endif
 BuildRequires:	python-devel >= 2.2
@@ -113,7 +114,7 @@ rm -f po/no.po
 %build
 %configure \
 	--disable-update-mimedb \
-	--enable-database \
+%{?with_pgsql:	--enable-database} \
 	--enable-gtk-doc \
 	--enable-python \
 	--enable-python-plugin \
