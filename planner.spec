@@ -9,16 +9,14 @@ Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu po
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.13
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.13/%{name}-%{version}.tar.bz2
 # Source0-md5:	acc2e2075bc489e849843009d6583cc0
-Patch0:		%{name}-locale_names.patch
+Patch0:		%{name}-desktop.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel
-BuildRequires:	XFree86-devel
-BuildRequires:	bzip2-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0.2
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.30
@@ -46,7 +44,7 @@ Obsoletes:	mrproject
 Obsoletes:	python-libmrproject
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-#define		_noautoreqdep	libplanner-1.so.0
+%define		_noautoreqdep	libplanner-1.so.0
 
 %description
 A project management program that can help build project plans, and
@@ -109,12 +107,10 @@ Wi±zanie Pythona do biblioteki Planner.
 %setup -q
 %patch0 -p1
 
-rm -f po/no.po
-
 %build
 %configure \
 	--disable-update-mimedb \
-%{?with_pgsql:	--enable-database} \
+	%{?with_pgsql:--enable-database} \
 	--enable-gtk-doc \
 	--enable-python \
 	--enable-python-plugin \
@@ -139,6 +135,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/{,*/}*.la
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/gtk-2.0/*.la
 rm -f $RPM_BUILD_ROOT%{_datadir}/mime/{XMLnamespaces,globs,magic}
 rm -f $RPM_BUILD_ROOT%{_datadir}/mime/application/*.xml
+rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -146,19 +144,17 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/mime/application/*.xml
 rm -rf $RPM_BUILD_ROOT
 
 %post
-umask 022
 /sbin/ldconfig
-update-mime-database %{_datadir}/mime ||:
 %scrollkeeper_update_post
 %update_desktop_database_post
+umask 022
+update-mime-database %{_datadir}/mime ||:
 
 %preun
 %gconf_schema_uninstall %{name}.schemas
 
 %postun
-umask 022
 /sbin/ldconfig
-update-mime-database %{_datadir}/mime
 %scrollkeeper_update_postun
 %update_desktop_database_postun
 if [ $1 = 0 ]; then
@@ -187,9 +183,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/views/*.so
 
-%{_datadir}/application-registry/*
 %{_desktopdir}/*
-%{_datadir}/mime-info/*
 %{_datadir}/mime/packages/*.xml
 %{_datadir}/%{name}
 %{_iconsdir}/hicolor/*/*/*.png
