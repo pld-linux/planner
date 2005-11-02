@@ -1,0 +1,16 @@
+diff -urN planner-0.13.orig/data/planner.desktop.in.in planner-0.13/data/planner.desktop.in.in
+--- planner-0.13.orig/data/planner.desktop.in.in	2005-11-02 18:57:14.611193232 +0100
++++ planner-0.13/data/planner.desktop.in.in	2005-11-02 19:02:33.087777432 +0100
+@@ -3,10 +3,10 @@
+ _Name=Project Management
+ _Comment=Planner Project Management
+ Exec=planner %F
+-Icon=gnome-planner.png
++Icon=gnome-planner
+ Terminal=false
+ Type=Application
+-Categories=Application;Office;ProjectManagement;
++Categories=GTK;GNOME;Office;ProjectManagement;
+ StartupNotify=true
+ MimeType=application/x-planner;
+ X-GNOME-Bugzilla-Bugzilla=GNOME
