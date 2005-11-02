@@ -10,7 +10,7 @@ Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.13
 Release:	4
-License:	GPL
+License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.13/%{name}-%{version}.tar.bz2
 # Source0-md5:	acc2e2075bc489e849843009d6583cc0
