@@ -1,19 +1,18 @@
-# TODO
-# - add bcond evolution ? - It's experimental code
 #
 # Conditional build:
-%bcond_with	pgsql	# without PostgreSQL storage module
+%bcond_without	eds	# without evolution-data-server support
+%bcond_without	pgsql	# without PostgreSQL storage module
 #
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu postêpu
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.13
-Release:	4
+Version:	0.14
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.13/%{name}-%{version}.tar.bz2
-# Source0-md5:	acc2e2075bc489e849843009d6583cc0
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
+# Source0-md5:	af54ef691bfa7fc24c7ad858d55fed4a
 Patch0:		%{name}-desktop.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel
@@ -24,21 +23,24 @@ BuildRequires:	libgnomeprintui-devel >= 2.6.0
 BuildRequires:	libgsf-devel >= 1.4.0
 BuildRequires:	libxslt-devel >= 1.1.0
 BuildRequires:	pkgconfig
-%if %{with pgsql}
-BuildRequires:	libgda-devel >= 1.0
-BuildRequires:	libgda-devel < 1.9
-BuildRequires:	postgresql-devel
-%endif
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1:2.0.0
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-Requires:	hicolor-icon-theme
+%if %{with eds}
+BuildRequires:	evolution-data-server-devel >= 1.2
+%endif
+%if %{with pgsql}
+BuildRequires:	libgda-devel >= 1:1.2.3
+BuildRequires:	postgresql-devel
+%endif
 Requires(post,preun):	GConf2
-Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
 Requires(post,postun):	shared-mime-info
+%{?with_eds:Requires:	evolution-data-server >= 1.2}
+Requires:	hicolor-icon-theme
 Obsoletes:	libmrproject
 Obsoletes:	mrproject
 Obsoletes:	python-libmrproject
@@ -110,6 +112,7 @@ Wi±zanie Pythona do biblioteki Planner.
 %build
 %configure \
 	--disable-update-mimedb \
+	%{?with_eds:--enable-eds} \
 	%{?with_pgsql:--enable-database} \
 	--enable-gtk-doc \
 	--enable-python \
@@ -132,11 +135,9 @@ install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 # useless - modules loaded through gmodule
 rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/{,*/}*.la
 
-rm -f $RPM_BUILD_ROOT%{py_sitedir}/gtk-2.0/*.la
+rm -f $RPM_BUILD_ROOT%{py_sitedir}/*.la
 rm -f $RPM_BUILD_ROOT%{_datadir}/mime/{XMLnamespaces,globs,magic}
 rm -f $RPM_BUILD_ROOT%{_datadir}/mime/application/*.xml
-rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -147,8 +148,8 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %scrollkeeper_update_post
 %update_desktop_database_post
-umask 022
-update-mime-database %{_datadir}/mime ||:
+%update_mime_database
+%update_icon_cache hicolor
 
 %preun
 %gconf_schema_uninstall %{name}.schemas
@@ -157,10 +158,8 @@ update-mime-database %{_datadir}/mime ||:
 /sbin/ldconfig
 %scrollkeeper_update_postun
 %update_desktop_database_postun
-if [ $1 = 0 ]; then
-	umask 022
-	update-mime-database %{_datadir}/mime
-fi
+%update_mime_database
+%update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -172,25 +171,21 @@ fi
 %dir %{_libdir}/%{name}/file-modules
 %dir %{_libdir}/%{name}/plugins
 %dir %{_libdir}/%{name}/storage-modules
-%dir %{_libdir}/%{name}/views
 
-%attr(755,root,root) %{_libdir}/%{name}/libgantt-task.so
 %attr(755,root,root) %{_libdir}/%{name}/file-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
 %if %{with pgsql}
 %exclude %{_libdir}/%{name}/storage-modules/*sql.so
 %endif
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
-%attr(755,root,root) %{_libdir}/%{name}/views/*.so
 
-%{_desktopdir}/*
-%{_datadir}/mime/packages/*.xml
 %{_datadir}/%{name}
+%{_desktopdir}/*
 %{_iconsdir}/hicolor/*/*/*.png
-%dir %{_pixmapsdir}/%{name}
 %{_pixmapsdir}/*.png
-%{_pixmapsdir}/*/*.png
-%{_omf_dest_dir}/*
+%{_datadir}/mime/packages/*.xml
+%{_omf_dest_dir}/planner-C.omf
+%lang(eu) %{_omf_dest_dir}/planner-eu.omf
 %{_examplesdir}/%{name}-%{version}
 %{_sysconfdir}/gconf/schemas/%{name}.schemas
 
@@ -210,4 +205,4 @@ fi
 
 %files -n python-planner
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/gtk-2.0/planner.so
+%attr(755,root,root) %{py_sitedir}/planner*.so
