@@ -8,7 +8,7 @@ Summary(pl):	System zarz±dzania projektem pomocny przy planowaniu i ¶ledzeniu po
 Summary(pt_BR):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
@@ -16,6 +16,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.
 Patch0:		%{name}-desktop.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel
+BuildRequires:	automake
 BuildRequires:	gnome-vfs2-devel >= 2.0.2
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.30
@@ -110,6 +111,7 @@ Wi±zanie Pythona do biblioteki Planner.
 %patch0 -p1
 
 %build
+cp -f /usr/share/automake/config.sub .
 %configure \
 	--disable-update-mimedb \
 	%{?with_eds:--enable-eds} \
