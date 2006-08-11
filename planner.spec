@@ -193,14 +193,14 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 
-%{_datadir}/%{name}                                                                                                                              
-%{_desktopdir}/*                                                                                                                                 
-%{_iconsdir}/hicolor/*/*/*.png                                                                                                                   
-%{_pixmapsdir}/*.png                                                                                                                             
-%{_datadir}/mime/packages/*.xml                                                                                                                  
-%{_omf_dest_dir}/planner-C.omf                                                                                                                   
-%lang(eu) %{_omf_dest_dir}/planner-eu.omf                                                                                                        
-%{_examplesdir}/%{name}-%{version}                                                                                                               
+%{_datadir}/%{name}
+%{_desktopdir}/*
+%{_iconsdir}/hicolor/*/*/*.png
+%{_pixmapsdir}/*.png
+%{_datadir}/mime/packages/*.xml
+%{_omf_dest_dir}/planner-C.omf
+%lang(eu) %{_omf_dest_dir}/planner-eu.omf
+%{_examplesdir}/%{name}-%{version}
 %{_sysconfdir}/gconf/schemas/%{name}.schemas
 
 %files devel
