@@ -194,7 +194,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
 
 %{_datadir}/%{name}
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/*.png
 %{_pixmapsdir}/*.png
 %{_datadir}/mime/packages/*.xml
