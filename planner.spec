@@ -4,8 +4,8 @@
 %bcond_without	pgsql	# without PostgreSQL storage module
 #
 Summary:	A project management program that can help build plans, and track the progress
-Summary(pl.UTF-8):   System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
-Summary(pt_BR.UTF-8):   Planner é um programa para gerenciamento de projetos
+Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
+Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14
 Release:	2
@@ -62,7 +62,7 @@ Planner é um gerenciador de projetos baseado no GNOME.
 
 %package devel
 Summary:	Header files for planner library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki planner
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki planner
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.12.1
@@ -79,7 +79,7 @@ Pliki nagłówkowe biblioteki planner.
 
 %package apidocs
 Summary:	libplanner API documentation
-Summary(pl.UTF-8):   Dokumentacja API libplanner
+Summary(pl.UTF-8):	Dokumentacja API libplanner
 Group:		Documentation
 Requires:	gtk-doc-common
 
@@ -91,7 +91,7 @@ Dokumentacja API libplanner.
 
 %package storage-pgsql
 Summary:	PostgreSQL storage module for Planner
-Summary(pl.UTF-8):   Moduł przechowywania danych w bazie PostgreSQL dla Plannera
+Summary(pl.UTF-8):	Moduł przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gda-postgres >= 1:1.2.3
@@ -106,7 +106,7 @@ Moduł przechowywania danych w bazie PostgreSQL dla Plannera.
 
 %package -n python-planner
 Summary:	Python binding for Planner library
-Summary(pl.UTF-8):   Wiązanie Pythona do biblioteki Planner
+Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki Planner
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq	python-libs
