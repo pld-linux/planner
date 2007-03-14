@@ -7,40 +7,46 @@ Summary:	A project management program that can help build plans, and track the p
 Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.14
-Release:	2
+Version:	0.14.2
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
-# Source0-md5:	af54ef691bfa7fc24c7ad858d55fed4a
+# Source0-md5:	d03081c6562a94b64628689500f55195
 Patch0:		%{name}-desktop.patch
 URL:		http://www.imendio.com/projects/planner/
-BuildRequires:	GConf2-devel >= 2.14.0
+BuildRequires:	GConf2-devel >= 2.18.0.1
+BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
-BuildRequires:	gnome-vfs2-devel >= 2.15.91
-BuildRequires:	gtk-doc >= 1.7
-BuildRequires:	intltool >= 0.35
-BuildRequires:	libgnomeprintui-devel >= 2.12.1
+BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
+BuildRequires:	gtk+2-devel >= 2:2.10.10
+BuildRequires:	gtk-doc >= 1.8
+BuildRequires:	intltool >= 0.35.5
+BuildRequires:	libglade2-devel >= 1:2.6.0
+BuildRequires:	libgnomeprintui-devel >= 2.18.0
+BuildRequires:	libgnomeui-devel >= 2.18.1
 BuildRequires:	libgsf-devel >= 1.14.1
-BuildRequires:	libxslt-devel >= 1.1.17
+BuildRequires:	libtool
+BuildRequires:	libxml2-devel >= 1:2.6.27
+BuildRequires:	libxslt-devel >= 1.1.20
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.3.2
-BuildRequires:	python-pygtk-devel >= 2:2.9.6
+BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 %if %{with eds}
-BuildRequires:	evolution-data-server-devel >= 1.7.91
+BuildRequires:	evolution-data-server-devel >= 1.10.0
 %endif
 %if %{with pgsql}
 BuildRequires:	libgda-devel >= 1:1.2.3
 BuildRequires:	postgresql-devel
 %endif
-Requires(post,preun):	GConf2 >= 2.14.0
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
 Requires(post,postun):	shared-mime-info
-%{?with_eds:Requires:	evolution-data-server >= 1.7.91}
+Requires(post,preun):	GConf2
+%{?with_eds:Requires:	evolution-data-server >= 1.10.0}
 Requires:	hicolor-icon-theme
 Obsoletes:	libmrproject
 Obsoletes:	mrproject
@@ -65,9 +71,9 @@ Summary:	Header files for planner library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki planner
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.12.1
+Requires:	glib2-devel >= 1:2.12.11
 Requires:	libgsf-devel >= 1.14.1
-Requires:	libxml2-devel >= 1:2.6.26
+Requires:	libxml2-devel >= 1:2.6.27
 Obsoletes:	libmrproject-devel
 Obsoletes:	libmrproject-static
 
@@ -110,7 +116,7 @@ Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki Planner
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 %pyrequires_eq	python-libs
-Requires:	python-pygtk-devel >= 2:2.9.6
+Requires:	python-pygtk-devel >= 2:2.10.4
 
 %description -n python-planner
 Python binding for Planner library.
@@ -124,6 +130,12 @@ Wiązanie Pythona do biblioteki Planner.
 
 %build
 cp -f /usr/share/automake/config.sub .
+%{__glib_gettextize}
+%{__intltoolize}
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure \
 	--disable-update-mimedb \
 	%{?with_eds:--enable-eds} \
@@ -132,7 +144,7 @@ cp -f /usr/share/automake/config.sub .
 	--enable-python \
 	--enable-python-plugin \
 	--enable-timetable
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -198,6 +210,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/*/*.png
 %{_pixmapsdir}/*.png
 %{_datadir}/mime/packages/*.xml
+%{_mandir}/man1/planner.1*
 %{_omf_dest_dir}/planner-C.omf
 %lang(eu) %{_omf_dest_dir}/planner-eu.omf
 %{_examplesdir}/%{name}-%{version}
