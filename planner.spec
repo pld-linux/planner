@@ -7,13 +7,14 @@ Summary:	A project management program that can help build plans, and track the p
 Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.14.2
+Version:	0.14.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
-# Source0-md5:	d03081c6562a94b64628689500f55195
+# Source0-md5:	9aee1307f8b9d643241473791f0efa64
 Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-missing-semicolon.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
@@ -28,7 +29,7 @@ BuildRequires:	libgnomeui-devel >= 2.18.1
 BuildRequires:	libgsf-devel >= 1.14.1
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 1:2.6.27
-BuildRequires:	libxslt-devel >= 1.1.20
+BuildRequires:	libxslt-devel >= 1.1.23
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.3.2
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
@@ -127,6 +128,7 @@ Wiązanie Pythona do biblioteki Planner.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -191,7 +193,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/libplanner*.so.*.*
+%attr(755,root,root) %{_libdir}/libplanner-1.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libplanner-1.so.0
 
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/file-modules
@@ -218,8 +221,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/libplanner*.la
-%attr(755,root,root) %{_libdir}/libplanner*.so
+%{_libdir}/libplanner-1.la
+%attr(755,root,root) %{_libdir}/libplanner-1.so
 %{_includedir}/planner-1.0
 %{_pkgconfigdir}/*.pc
 
