@@ -1,20 +1,20 @@
 #
 # Conditional build:
 %bcond_without	eds	# without evolution-data-sever support
-%bcond_without	pgsql	# without PostgreSQL storage module
+%bcond_without	gda3	# without PostgreSQL storage module
 #
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.14.3
-Release:	4
+Version:	0.14.4
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
-# Source0-md5:	9aee1307f8b9d643241473791f0efa64
+# Source0-md5:	8fcbd1b55dd037662f7710a28a96bb92
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-missing-semicolon.patch
+Patch1:		%{name}-makefile.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
@@ -38,9 +38,8 @@ BuildRequires:	scrollkeeper
 %if %{with eds}
 BuildRequires:	evolution-data-server-devel >= 1.10.0
 %endif
-%if %{with pgsql}
-BuildRequires:	libgda-devel >= 1:1.2.3
-BuildRequires:	postgresql-devel
+%if %{with gda3}
+BuildRequires:	libgda3-devel
 %endif
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	desktop-file-utils
@@ -96,7 +95,7 @@ libplanner API documentation.
 %description apidocs -l pl.UTF-8
 Dokumentacja API libplanner.
 
-%package storage-pgsql
+%package storage-sql
 Summary:	PostgreSQL storage module for Planner
 Summary(pl.UTF-8):	Moduł przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
@@ -104,12 +103,13 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	gda-postgres >= 1:1.2.3
 Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject-storage-pgsql
+Obsoletes:	planner-storage-pgsql
 
-%description storage-pgsql
-PostgreSQL storage module for Planner application.
+%description storage-sql
+SQL storage module for Planner application.
 
-%description storage-pgsql -l pl.UTF-8
-Moduł przechowywania danych w bazie PostgreSQL dla Plannera.
+%description storage-sql -l pl.UTF-8
+Moduł przechowywania danych w bazie SQL dla Plannera.
 
 %package -n python-planner
 Summary:	Python binding for Planner library
@@ -128,7 +128,7 @@ Wiązanie Pythona do biblioteki Planner.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -141,7 +141,7 @@ cp -f /usr/share/automake/config.sub .
 %configure \
 	--disable-update-mimedb \
 	%{?with_eds:--enable-eds} \
-	%{?with_pgsql:--enable-database} \
+	%{?with_gda3:--with-database=gda3} \
 	--enable-gtk-doc \
 	--enable-python \
 	--enable-python-plugin \
@@ -203,7 +203,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/%{name}/file-modules/*.so
 %attr(755,root,root) %{_libdir}/%{name}/plugins/*.so
-%if %{with pgsql}
+%if %{with gda3}
 %exclude %{_libdir}/%{name}/storage-modules/*sql.so
 %endif
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*.so
@@ -230,8 +230,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_gtkdocdir}/libplanner
 
-%if %{with pgsql}
-%files storage-pgsql
+%if %{with gda3}
+%files storage-sql
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/storage-modules/*sql.so
 %endif

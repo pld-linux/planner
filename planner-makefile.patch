@@ -1,0 +1,15 @@
+--- planner-0.14.4/data/ui/Makefile.am~	2008-07-22 15:41:58.000000000 +0200
++++ planner-0.14.4/data/ui/Makefile.am	2009-11-25 10:54:03.807578899 +0100
+@@ -3,12 +3,10 @@
+ ui_DATA = \
+ 	gantt-view.ui		\
+ 	task-view.ui		\
+-	gantt-view.ui		\
+ 	html-plugin.ui		\
+ 	main-window.ui		\
+ 	resource-view.ui	\
+ 	sql-plugin.ui		\
+-	task-view.ui		\
+ 	xml-planner-plugin.ui	\
+ 	time-table-view.ui	\
+ 	eds-plugin.ui		\
