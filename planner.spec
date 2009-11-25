@@ -19,10 +19,14 @@ URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
+BuildRequires:	docbook-dtd412-xml
+%{?with_eds:BuildRequires:	evolution-data-server-devel >= 1.10.0}
+BuildRequires:	gettext-devel
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gtk+2-devel >= 2:2.10.10
 BuildRequires:	gtk-doc >= 1.8
 BuildRequires:	intltool >= 0.35.5
+%{?with_gda3:BuildRequires:	libgda3-devel}
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeprintui-devel >= 2.18.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
@@ -33,14 +37,10 @@ BuildRequires:	libxslt-devel >= 1.1.23
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.3.2
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
+BuildRequires:	readline-devel
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-%if %{with eds}
-BuildRequires:	evolution-data-server-devel >= 1.10.0
-%endif
-%if %{with gda3}
-BuildRequires:	libgda3-devel
-%endif
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
