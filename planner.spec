@@ -7,12 +7,12 @@ Summary:	A project management program that can help build plans, and track the p
 Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
-Version:	0.14.5
+Version:	0.14.6
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.bz2
-# Source0-md5:	611220d902eb93c74fc237cf02301e71
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
+# Source0-md5:	605c589f2c9ec695df0ae79aed3e2e3b
 Patch0:		%{name}-desktop.patch
 URL:		http://www.imendio.com/projects/planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
@@ -22,7 +22,7 @@ BuildRequires:	docbook-dtd412-xml
 %{?with_eds:BuildRequires:	evolution-data-server-devel >= 1.10.0}
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
-BuildRequires:	gtk+2-devel >= 2:2.10.10
+BuildRequires:	gtk+2-devel >= 2:2.14.0
 BuildRequires:	gtk-doc >= 1.8
 BuildRequires:	intltool >= 0.35.5
 %{?with_gda3:BuildRequires:	libgda3-devel}
@@ -101,7 +101,7 @@ Summary:	PostgreSQL storage module for Planner
 Summary(pl.UTF-8):	Moduł przechowywania danych w bazie PostgreSQL dla Plannera
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gda-postgres >= 1:1.2.3
+Requires:	libgda3-provider-postgres
 Obsoletes:	libmrproject-storage-pgsql
 Obsoletes:	mrproject-storage-pgsql
 Obsoletes:	planner-storage-pgsql
