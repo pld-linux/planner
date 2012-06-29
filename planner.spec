@@ -8,12 +8,13 @@ Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śled
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14.6
-Release:	1
+Release:	1.1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
 # Source0-md5:	605c589f2c9ec695df0ae79aed3e2e3b
 Patch0:		%{name}-desktop.patch
+Patch1:		pythonlib-in-libdir.patch
 URL:		https://live.gnome.org/Planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
@@ -129,6 +130,7 @@ Wiązanie Pythona do biblioteki Planner.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
