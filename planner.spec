@@ -14,7 +14,7 @@ Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
 # Source0-md5:	605c589f2c9ec695df0ae79aed3e2e3b
 Patch0:		%{name}-desktop.patch
-URL:		http://www.imendio.com/projects/planner/
+URL:		https://live.gnome.org/Planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
