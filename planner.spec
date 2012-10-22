@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	eds	# without evolution-data-sever support
+%bcond_with	eds	# without evolution-data-sever support
 %bcond_without	gda3	# without PostgreSQL storage module
 #
 Summary:	A project management program that can help build plans, and track the progress
@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śled
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14.6
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
