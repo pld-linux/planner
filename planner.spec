@@ -21,7 +21,7 @@ BuildRequires:	autoconf >= 2.54
 BuildRequires:	automake
 BuildRequires:	docbook-dtd412-xml
 %{?with_eds:BuildRequires:	evolution-data-server-devel >= 1.10.0}
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gtk+2-devel >= 2:2.14.0
 BuildRequires:	gtk-doc >= 1.8
