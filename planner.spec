@@ -8,13 +8,14 @@ Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śled
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14.6
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
 # Source0-md5:	605c589f2c9ec695df0ae79aed3e2e3b
 Patch0:		%{name}-desktop.patch
 Patch1:		pythonlib-in-libdir.patch
+Patch2:		gtk-doc-1.25.patch
 URL:		https://live.gnome.org/Planner/
 BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.54
@@ -131,6 +132,7 @@ Wiązanie Pythona do biblioteki Planner.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -164,10 +166,11 @@ install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 	omf_dest_dir=%{_omf_dest_dir}
 
 # useless - modules loaded through gmodule
-rm -f $RPM_BUILD_ROOT%{_datadir}/mime/application/*.xml
-rm -f $RPM_BUILD_ROOT%{_datadir}/mime/{XMLnamespaces,globs,magic}
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/{,*/}*.la
-rm -f $RPM_BUILD_ROOT%{py_sitedir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*/*.la
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
+
+# rpm5 does not line when this directory exists prior to packaging docs
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 %find_lang %{name} --with-gnome --all-name
 
