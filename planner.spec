@@ -2,13 +2,13 @@
 # Conditional build:
 %bcond_with	eds	# without evolution-data-sever support
 %bcond_without	gda3	# without PostgreSQL storage module
-#
+
 Summary:	A project management program that can help build plans, and track the progress
 Summary(pl.UTF-8):	System zarządzania projektem pomocny przy planowaniu i śledzeniu postępu
 Summary(pt_BR.UTF-8):	Planner é um programa para gerenciamento de projetos
 Name:		planner
 Version:	0.14.6
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%{name}-%{version}.tar.xz
@@ -91,6 +91,9 @@ Summary:	libplanner API documentation
 Summary(pl.UTF-8):	Dokumentacja API libplanner
 Group:		Documentation
 Requires:	gtk-doc-common
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 libplanner API documentation.
@@ -119,7 +122,7 @@ Summary:	Python binding for Planner library
 Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki Planner
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
-%pyrequires_eq	python-libs
+Requires:	python-libs
 Requires:	python-pygtk-devel >= 2:2.10.4
 
 %description -n python-planner
